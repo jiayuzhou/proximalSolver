@@ -20,8 +20,8 @@ function [ x, f_x, output ] = pnopt_sparsa( smoothF, nonsmoothF, x, options )
     'desc_param'    , 0.0001 ,... % sufficient descent parameter
     'display'       , 100    ,... % display frequency (<= 0 for no display) 
     'backtrack_mem' , 10     ,... % number of previous function values to save
-    'max_fun_evals' , 50000  ,... % max number of function evaluations
-    'max_iter'      , 5000   ,... % max number of iterations
+    'maxfunEv'      , 50000  ,... % max number of function evaluations
+    'maxIter'      , 5000   ,... % max number of iterations
     'ftol'          , 1e-9   ,... % stopping tolerance on objective function 
     'optim_tol'     , 1e-6   ,... % stopping tolerance on opt
     'xtol'          , 1e-9    ... % stopping tolerance on solution
@@ -37,8 +37,8 @@ function [ x, f_x, output ] = pnopt_sparsa( smoothF, nonsmoothF, x, options )
   desc_param    = options.desc_param;
   display       = options.display;
   backtrack_mem = options.backtrack_mem;
-  max_fun_evals = options.max_fun_evals;
-  max_iter      = options.max_iter;
+  max_fun_evals = options.maxfunEv;
+  max_iter      = options.maxIter;
   ftol          = options.ftol;
   optim_tol     = options.optim_tol;
   xtol          = options.xtol;
@@ -154,6 +154,8 @@ function [ x, f_x, output ] = pnopt_sparsa( smoothF, nonsmoothF, x, options )
       fprintf( ' %4d | %6d  %6d  %12.4e  %12.4e  %12.4e\n', ...
         iter, fun_evals, prox_evals, step, f_x, optim );
     end
+    
+    funEv = fun_evals;
     
     pnopt_stop
   

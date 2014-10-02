@@ -17,6 +17,7 @@ w0 = randn(D, 1);
 % configure the optimization parameters
 % this input can be omitted to use default configuration.
 sparsa_options = pnopt_optimset(...
+          'debug'     , 1      ,...
           'display'   , 10    ,...
           'maxfunEv'  , 5000 ,...
           'maxIter'   , 500  ,...
@@ -36,15 +37,18 @@ disp('accelerated gradient');
 tic;
 
 % accelerated gradient solver
-[w1, ~,info] = pnopt_accgrad( smoothF, non_smooth, w0, sparsa_options );
+[w1, ~,info1] = pnopt_accgrad( smoothF, non_smooth, w0, sparsa_options );
 
 % sparsa solver
-[w2, ~,info] = pnopt_sparsa( smoothF, non_smooth, w0, sparsa_options );
+[w2, ~,info2] = pnopt_sparsa( smoothF, non_smooth, w0, sparsa_options );
 toc;
 disp(numel(w1))
 disp(nnz(w1))
 
 
 figure; 
-plot(info.Trace.f_x);
+plot(info1.trace.f_x);
+hold on
+plot(info2.trace.f_x, '-r');
 title('convergence')
+legend(['accgrad', 'sparsa'])
